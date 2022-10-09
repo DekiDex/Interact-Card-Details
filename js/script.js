@@ -1,192 +1,124 @@
-let inputObject = [];
-let id = (id) => document.getElementById(id);
-let classes = (classes) => document.getElementsByClassName(classes);
+const cardNumberBox = document.querySelector(".numbers");
+const cardNameBox = document.querySelector(".card__title");
+const monthBox = document.querySelector(".month_card");
+const yearBox = document.querySelector(".year_card");
+const cvcBox = document.querySelector(".numberstwo");
+const cardholderNameInput = document.getElementById("card-name");
+const cardNumberInput = document.getElementById("card-number");
+const cardExpMonth = document.getElementById("month");
+const cardExpYear = document.getElementById("year");
+const cvc = document.getElementById("cvc");
 
-let form = id("form");
-let errorMsg = classes("error");
-let blank = "Can't be blank";
-let noValid = "Not valid";
+const submitBtn = document.querySelector(".confirm");
+const submitedContainer = document.querySelector(".complete");
 
-let username = id("name");
-let cardNumber = id("card-number");
-let mm = id("mm");
-let yy = id("yy");
-let cvc = id("cvc");
-let inputs = document.querySelectorAll("input[type=text]");
-let inputContainer = document.getElementsByClassName("input-container");
-let cardBack = document.querySelector(".back");
-let cvcDom = document.querySelector(".numberstwo");
-let cardNameDom = document.querySelector(".card-title");
-let month = document.querySelector(".month");
-let year = document.querySelector(".year");
-let numbers = document.querySelectorAll(".numbers");
-let cardNumberDom = document.querySelector(".card-number");
-let btnSubmit = id("btn-submit");
-let btnContinue = document.querySelector(".thank-you__btn");
-let completed = document.querySelector(".complete");
+const form = document.querySelector(".form");
+const cardNameError = document.querySelector(".card-name-error");
+const cardNumberError = document.querySelector(".card-number-error");
+const monthError = document.querySelector(".month-error");
+const yearError = document.querySelector(".year-error");
+const cvcError = document.querySelector(".cvc-error");
 
+const continueBtn = document.querySelector(".thank-you__btn");
 
+cardholderNameInput.addEventListener("keyup", (e) => {
+  let cardNameValue = cardholderNameInput.value;
+  let key = e.key;
+  let keyLetters = key.match(/^[A-za-z ]*$/);
 
-inputObject.push(username);
-inputObject.push(cardNumber);
-inputObject.push(mm);
-inputObject.push(yy);
-inputObject.push(cvc);
-
-
-
-btnContinue.addEventListener("click", (e) => {
-
-    form.style.display = "block";
-    completed.style.display = "none";
-    location.reload();
-
-})
-
-
-// Animation for input focus
-for(let i = 0; i < inputContainer.length; i++){
-
-    inputs[i].addEventListener("focus", (e) => {
-        e.preventDefault();
-        inputContainer[i].style.padding = "1px";
-        inputs[i].style.border = "1px solid hsl(270, 3%, 87%)";
-    });
-
-    inputs[i].addEventListener("blur", (e) => {
-        e.preventDefault();
-        inputContainer[i].style.padding = "0";
-    });
-
-}
-
-// Cant't be blank
-form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    
-    for(let i = 0; i < inputObject.length; i++){
-        engine(inputObject[i], i, blank);
-    }
-
-    let formGood = true;
-      if(!inputObject[0].value.match("^[a-zA-Z ]{3,20}$")){
-            formGood = false;
-            console.log("input1");
-    }
-    if(!inputObject[1].value.trim().match("^[0-9 ]{19}$")){
-        formGood = false;
-        console.log("input2");
-    }
-    if(!inputObject[2].value.match("^(0?[1-9]|1[012])")){
-        formGood = false;
-        console.log("input3");
-    }
-    if(!inputObject[3].value.match("[0-9][0-9]")){
-        formGood = false;
-        console.log("input4");
-    }
-    if(!inputObject[4].value.match("[0-9]{3}")){
-        formGood = false;
-        console.log("input5");
-    }
-
-    if(formGood){
-        form.style.display = "none";
-        completed.style.display = "block";
-    }
-
-  });
-
-
-
-// Function for input animation
-let engine = (id, serial, message) => {
-    if (id.value.trim() === "") {
-
-        if(errorMsg[serial]){
-            errorMsg[serial].innerHTML = message;
-        } 
-        id.style.border = "2px solid hsl(0, 100%, 66%)";
-    }
-    else{
-        
-        if(errorMsg[serial]){
-            errorMsg[serial].innerHTML = " ";
-        }
-        if(serial == 2 || serial ==  3){
-            if(serial == 3){var vari = 2}
-            if(serial == 2){var vari = 3}
-
-            if(id.value.trim() == "" || inputs[vari].value.trim() == ""){
-                errorMsg[2].innerHTML = message;
-            }
-        }
-    } 
-    
-}
-
-
-cvc.addEventListener("keyup", (e) => {
-    e.preventDefault();
-    if(cvc.value.trim() == ""){
-        cvcDom.innerHTML = "000"
-    }
-    else{
-        cvcDom.innerHTML = cvc.value;
-    }
-    
+  if (cardNameValue.length === 0) {
+    cardNameError.innerHTML = "Please enter your name!";
+  } else if (keyLetters) {
+    cardNameBox.innerHTML = cardNameValue;
+  } else {
+    cardholderNameInput.setAttribute("disabled", "");
+    cardNameError.innerHTML = "Please use only letters!";
+  }
 });
 
-username.addEventListener("keyup", (e) => {
-    e.preventDefault();
-    if(username.value.trim() == ""){
-        cardNameDom.innerHTML = "Jane Appleseed";
-    }
-    else{
-        cardNameDom.innerHTML = username.value;
-    }
+cardNumberInput.addEventListener("keyup", (e) => {
+  let cardNumberValue = cardNumberInput.value;
+  let key = e.key;
+  let keyNumbers = key.match(/^[0-9 ]*$/);
+
+  if (cardNumberValue.length === 0) {
+    cardNumberError.innerHTML = "Please enter your card number!";
+  } else if (keyNumbers) {
+    cardNumberBox.innerHTML = cardNumberValue;
+  } else if (key === "Backspace") {
+    cardNumberInput.setAttribute("enabled", "");
+  } else {
+    cardNumberInput.setAttribute("disabled", "");
+    cardNumberError.innerHTML = "Please use only numbers!";
+  }
 });
 
-
-mm.addEventListener("keyup", (e) => {
-    e.preventDefault();
-    if(mm.value.trim() == ""){
-        month.innerHTML = "00";
-    }
-    else{
-        month.innerHTML = mm.value;
-    }
+cardNumberInput.addEventListener("input", (e) => {
+  e.target.value = e.target.value = e.target.value
+    .replace(/[^\dA-Z]/g, "")
+    .replace(/(.{4})/g, "$1 ")
+    .trim();
 });
 
+cardExpMonth.addEventListener("input", (e) => {
+  let value = e.target.value;
+  let valueNumbers = value.match(/^[0-9 ]*$/);
 
-
-yy.addEventListener("keyup", (e) => {
-    e.preventDefault();
-    if(yy.value.trim() == ""){
-        year.innerHTML = "00";
-    }
-    else{
-        year.innerHTML = yy.value;
-    }
+  if (value === "") {
+    monthError.innerHTML = "Please enter month";
+  } else if (valueNumbers) {
+    monthBox.innerHTML = value;
+  } else {
+    monthError.innerHTML = "Please enter month!";
+    cardExpMonth.setAttribute("disabled", "");
+  }
 });
 
+cardExpYear.addEventListener("input", (e) => {
+  let value = e.target.value;
+  let valueNumbers = value.match(/^[0-9 ]*$/);
+  if (value === "") {
+    yearError.innerHTML = "Please enter year!";
+  } else if (valueNumbers) {
+    yearBox.innerHTML = valueNumbers;
+  } else {
+    yearError.innerHTML = "Please enter year!";
+    cardExpYear.setAttribute("disabled", "");
+  }
+});
 
-let counter = 0;
-cardNumber.addEventListener("keyup", (e) => {
-    
-    if(!cardNumber.value.trim().length == 0){
-            if(counter%4 == 0 && cardNumber.value.trim().length < 16){
-                cardNumber.value += " ";
-            }
+cvc.addEventListener("input", (e) => {
+  let value = e.target.value;
+  let valueNumbers = value.match(/^[0-9 ]*$/);
+  if (value === "") {
+    cvcError.innerHTML = "Please enter cvc!";
+  } else if (valueNumbers) {
+    cvcBox.innerHTML = valueNumbers;
+  } else {
+    cvcError.innerHTML = "Please enter cvc!";
+    cvc.setAttribute("disabled", "");
+  }
+});
 
-            len = cardNumber.value.trim().length;
-    }
+submitBtn.addEventListener("click", () => {
+  if (cardholderNameInput.value.length <= 0) {
+    cardNameError.innerHTML = "Please enter your name!";
+  } else if (cardNumberInput.value.length <= 0) {
+    cardNumberError.innerHTML = "Please enter your card number!";
+  } else if (cardExpMonth.value.length <= 0) {
+    monthError.innerHTML = "Please enter month!";
+  } else if (cardExpYear.value.length <= 0) {
+    yearError.innerHTML = "Please enter year!";
+  } else if (cvc.value.length <= 0) {
+    cvcError.innerHTML = "Please enter your cvc!";
+  } else {
+    submitedContainer.style.display = "block";
+    form.style.display = "none";
+  }
+});
 
-    if(cardNumber.value.trim() == ""){
-        cardNumberDom.innerHTML = "0000 0000 0000 0000";
-        counter = 0;
-    }else{
-        cardNumberDom.innerHTML = cardNumber.value;
-    }
-    counter++;
-})
+continueBtn.addEventListener("click", () => {
+  submitedContainer.style.display = "none";
+  continueBtn.style.width = "100%";
+  form.style.display = "block";
+});

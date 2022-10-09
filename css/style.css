@@ -17,15 +17,14 @@ body {
     width: 100%;
   }
 
-  .error {
-    color: hsl(0, 100%, 66%);
-    font-size: 1.2rem;
-    margin-top: 5px;
-    display: none;
-   }
-
   .complete {
     display: none;
+    text-align: center;
+    align-items: center;
+  }
+
+  .labels {
+    display: flex;
   }
 
   main {
@@ -45,13 +44,20 @@ body {
     color: hsl(270, 3%, 87%);
   }
 
+  input:focus {
+    border-image-source: linear-gradient(hsl(249, 99%, 64%), hsl(278, 94%, 30%));
+    border-width: 2pt;
+    border-image-slice: 1;
+    outline: none;
+  }
+
   .cards {
     letter-spacing: .2rem;
     font-size: 65%;
   }
 
   .block {
-    display: block;
+    display: flex;
   }
 
   .first {
@@ -83,13 +89,17 @@ body {
     position: absolute;
   }
 
-  .fourzero {
-    display: flex;
-  }
+  .card-name-error,
+.card-number-error,
+.month-error,
+.year-error,
+.cvc-error {
+  color: red;
+}
 
-  .cvc input {
-    width: 40px;
-  }
+.thank-you__btn {
+  margin-top: 3rem;
+}
 
 @media screen and (min-width: 280px) {
 
@@ -168,7 +178,7 @@ body {
   }
 
   .cvc {
-    margin-left: -3.7rem;
+    margin-left: 2rem;
   }
 
   .block {
@@ -194,14 +204,22 @@ body {
     margin-bottom: 1rem;
   }
 
+  .added {
+    color: hsl(279, 6%, 55%);
+  }
+
   .datemonth {
-    width: 30%;
+    width: 60px;
     margin-right: .4rem;
   }
 
   input::placeholder {
     font-size: 130%;
     padding-left: .5rem;
+  }
+
+  .complete {
+    margin-top: 2rem;
   }
 
   /*Possitioning*/
@@ -291,15 +309,12 @@ body {
   }
 
   .cvc {
-    margin-left: -3.7rem;
-  }
-
-  .block {
-    width: 285px;
+    margin-left: 3rem;
+    
   }
 
   .cvcinput {
-    width: 150px;
+    margin-left: -7rem;
   }
 
   form {
@@ -319,13 +334,18 @@ body {
   }
 
   .datemonth {
-    width: 30%;
-    margin-right: .4rem;
+    width: 80px;
   }
 
   input::placeholder {
     font-size: 130%;
     padding-left: .5rem;
+  }
+
+  .complete {
+    width: 400px;
+    font-size: 75%;
+    margin-top: 0;
   }
 
   /*Possitioning*/
